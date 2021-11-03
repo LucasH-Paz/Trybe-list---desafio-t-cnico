@@ -27,7 +27,7 @@ const remove = async (req, res, next) => {
   return res.status(200).json({ result: 'succesfully removed' });
 };
 
-const getAll = async (req, res, next) => {
+const getAll = async (_req, res, next) => {
   const result = await Tasks.getAll();
   if (result.message) return next(result);
   return res.status(200).json({ result });
