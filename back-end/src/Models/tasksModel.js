@@ -7,10 +7,10 @@ const addNew = async (task) => {
 };
 
 const update = async (task) => {
-  const { _id } = task;
+  const { id } = task;
   const updatedTask = await connect.getConnection()
     .then((db) => db.collection('tasks').findOneAndUpdate(
-      { _id },
+      { _id: id },
       task,
       { returnNewDocument: true },
     ));
