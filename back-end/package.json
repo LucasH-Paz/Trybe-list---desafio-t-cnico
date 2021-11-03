@@ -19,6 +19,8 @@
     "nodemon": "^2.0.14"
   },
   "devDependencies": {
-    "eslint-config-trybe-backend": "^1.0.4"
+    "chai": "^4.3.4",
+    "eslint-config-trybe-backend": "^1.0.4",
+    "sinon": "^12.0.0"
   }
 }
