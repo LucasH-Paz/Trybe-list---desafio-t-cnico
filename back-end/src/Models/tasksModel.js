@@ -23,8 +23,15 @@ const remove = async (id) => {
   return updatedTask;
 };
 
+const getAll = async () => {
+  const tasks = await connect.getConnection()
+    .then((db) => db.collection('tasks').find().toArray());
+  return tasks;
+};
+
 module.exports = {
   addNew,
   update,
   remove,
+  getAll,
 };
