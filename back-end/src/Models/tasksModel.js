@@ -18,9 +18,9 @@ const update = async (task) => {
 };
 
 const remove = async (id) => {
-  const updatedTask = await connect.getConnection()
+  const deletedTask = await connect.getConnection()
     .then((db) => db.collection('tasks').findOneAndDelete({ _id: id }));
-  return updatedTask;
+  return deletedTask;
 };
 
 const getAll = async () => {
