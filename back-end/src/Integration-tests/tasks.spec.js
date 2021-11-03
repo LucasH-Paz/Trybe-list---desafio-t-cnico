@@ -135,7 +135,7 @@ describe('Atualizar tarefas', () => {
   });
 });
 
-describe.only('Deletar tarefas', () => {
+describe('Deletar tarefas', () => {
   before(async () => {
     const VirtualDB = await getConnection();
     sinon.stub(MongoClient, 'connect').resolves(VirtualDB);
@@ -145,9 +145,27 @@ describe.only('Deletar tarefas', () => {
     MongoClient.connect.restore();
   });
 
-  it('É possível Deletar uma tarefa', () => {});
+  it('É possível Deletar uma tarefa', async () => {
+    const { body: { result: { id } } } = await chai
+      .request(server)
+      .post('/tasks')
+      .send(DEFAULT_PAYLOAD);
+    const response = await chai.request(server).delete(`/tasks/${id}`);
 
-  it('Não é possível deletar uma tarefa com id inválido', () => {});
+    expect(response).to.have.status(200);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('result');
+    expect(response.body.result).to.be.equal('succesfully removed');
+  });
+
+  it('Não é possível deletar uma tarefa com id inválido', async () => {
+    const response = await chai.request(server).delete('/tasks/1234');
+
+    expect(response).to.have.status(404);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('message');
+    expect(response.body.message).to.be.equal('Invalid id');
+  });
 });
 
 describe('Listar todas as tarefas', () => {
@@ -160,5 +178,12 @@ describe('Listar todas as tarefas', () => {
     MongoClient.connect.restore();
   });
 
-  it('É possível listar todas as tarefas', () => {});
+  it('É possível listar todas as tarefas', async () => {
+    const response = await chai.request(server).get('/tasks');
+
+    expect(response).to.have.status(200);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('result');
+    expect(response.body.result).to.be.an('array');
+  });
 });
