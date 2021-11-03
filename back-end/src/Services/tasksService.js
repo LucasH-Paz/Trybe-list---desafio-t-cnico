@@ -31,7 +31,7 @@ const remove = async (id) => {
   }
 };
 
-const getAll = async (id) => {
+const getAll = async () => {
   try {
     const tasks = await Tasks.getAll();
     return tasks;

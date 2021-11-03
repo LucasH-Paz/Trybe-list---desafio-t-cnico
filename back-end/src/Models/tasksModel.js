@@ -11,7 +11,7 @@ const update = async (task) => {
   const updatedTask = await connect.getConnection()
     .then((db) => db.collection('tasks').findOneAndUpdate(
       { _id: id },
-      task,
+      { $set : { ...task } },
       { returnNewDocument: true },
     ));
   return updatedTask;
