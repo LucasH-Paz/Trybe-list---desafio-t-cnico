@@ -15,7 +15,7 @@ const addNew = async (task) => {
 const update = async (task, id) => {
   try {
     const updatedTask = await Tasks.update(task, id);
-    return updatedTask;
+    return updatedTask.value;
   } catch (e) {
     return builtError(INTERNAL_ERROR, 'Something went wrong');
   }
