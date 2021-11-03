@@ -6,7 +6,7 @@ const addNew = async (msg) => {
   return insertedId;
 };
 
-const updateOne = async (task) => {
+const update = async (task) => {
   const { _id } = task;
   const updatedTask = await connect.getConnection()
     .then((db) => db.collection('tasks').findOneAndUpdate(
@@ -17,7 +17,14 @@ const updateOne = async (task) => {
   return updatedTask;
 };
 
+const remove = async (id) => {
+  const updatedTask = await connect.getConnection()
+    .then((db) => db.collection('tasks').findOneAndDelete({ _id: id }));
+  return updatedTask;
+};
+
 module.exports = {
   addNew,
-  updateOne,
+  update,
+  remove,
 };
