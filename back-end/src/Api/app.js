@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Tasks = require('../Controllers/tasksController');
 
-const { handleErrors, validateTask, validateId } = require('../Middlewares/errors');
+const { handleErrors } = require('../Middlewares/errors');
+const { validateTask, validateId } = require('../Middlewares/tasks');
 
 const app = express();
 
