@@ -68,19 +68,21 @@ describe('Novas tarefas', () => {
   });
 });
 
-describe.only('Atualizar tarefas', () => {
-  before(async () => {
+describe('Atualizar tarefas', () => {
+  beforeEach(async () => {
     const VirtualDB = await getConnection();
     sinon.stub(MongoClient, 'connect').resolves(VirtualDB);
   });
 
-  after(() => {
+  afterEach(() => {
     MongoClient.connect.restore();
   });
 
   it('É possível atualizar uma tarefa', async () => {
-    const { body: { result: { id } } } = await chai.request(server).post('/tasks').send(DEFAULT_PAYLOAD);
-    console.log(id);
+    const { body: { result: { id } } } = await chai
+      .request(server)
+      .post('/tasks')
+      .send(DEFAULT_PAYLOAD);
     const response = await chai.request(server).put(`/tasks/${id}`).send(DEFAULT_UPLOAD);
 
     expect(response).to.have.status(201);
@@ -90,16 +92,50 @@ describe.only('Atualizar tarefas', () => {
     expect(response.body.result.title).to.be.equal(DEFAULT_UPLOAD.title);
   });
 
-  // it('Não é possível atualizar tarefas sem titulo', () => {});
+  it('Não é possível atualizar tarefas sem titulo', async () => {
+    const { title, ...withoutKey } = DEFAULT_UPLOAD;
+    const { body: { result: { id } } } = await chai
+      .request(server).post('/tasks').send(DEFAULT_PAYLOAD);
+    const response = await chai.request(server).put(`/tasks/${id}`).send(withoutKey);
 
-  // it('Não é possível atualizar tarefas sem descrição', () => {});
+    expect(response).to.have.status(400);
+    expect(response.body).to.have.property('message');
+    expect(response.body.message).to.be.equal('Invalid entries. Try again.');
+  });
 
-  // it('Não é possível atualizar tarefas sem status', () => {});
+  it('Não é possível atualizar tarefas sem descrição', async () => {
+    const { description, ...withoutKey } = DEFAULT_UPLOAD;
+    const { body: { result: { id } } } = await chai
+      .request(server).post('/tasks').send(DEFAULT_PAYLOAD);
+    const response = await chai.request(server).put(`/tasks/${id}`).send(withoutKey);
 
-  // it('Não é possível atualizar tarefas com id inválido', () => {});
+    expect(response).to.have.status(400);
+    expect(response.body).to.have.property('message');
+    expect(response.body.message).to.be.equal('Invalid entries. Try again.');
+  });
+
+  it('Não é possível atualizar tarefas sem status', async () => {
+    const { status, ...withoutKey } = DEFAULT_UPLOAD;
+    const { body: { result: { id } } } = await chai
+      .request(server).post('/tasks').send(DEFAULT_PAYLOAD);
+    const response = await chai.request(server).put(`/tasks/${id}`).send(withoutKey);
+
+    expect(response).to.have.status(400);
+    expect(response.body).to.have.property('message');
+    expect(response.body.message).to.be.equal('Invalid entries. Try again.');
+  });
+
+  it('Não é possível atualizar tarefas com id inválido', async () => {
+    const response = await chai.request(server).put('/tasks/12345').send(DEFAULT_PAYLOAD);
+
+    expect(response).to.have.status(404);
+    expect(response.body).to.be.an('object');
+    expect(response.body).to.have.property('message');
+    expect(response.body.message).to.be.equal('Invalid id');
+  });
 });
 
-describe('Deletar tarefas', () => {
+describe.only('Deletar tarefas', () => {
   before(async () => {
     const VirtualDB = await getConnection();
     sinon.stub(MongoClient, 'connect').resolves(VirtualDB);

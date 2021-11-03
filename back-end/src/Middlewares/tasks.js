@@ -15,7 +15,7 @@ const validateTask = (req, _res, next) => {
 
 const validateId = (req, _res, next) => {
   const { id } = req.params;
-  return ObjectID.isValid(id) ? next() : next(builtError(404, 'Id invalid'));
+  return ObjectID.isValid(id) ? next() : next(builtError(404, 'Invalid id'));
 };
 
 module.exports = {
