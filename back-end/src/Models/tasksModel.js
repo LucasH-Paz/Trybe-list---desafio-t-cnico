@@ -12,7 +12,7 @@ const update = async (task, id) => {
     .then((db) => db.collection('tasks').findOneAndUpdate(
       { _id: ObjectID(id) },
       { $set : { ...task } },
-      { returnNewDocument: true },
+      { returnOriginal: false },
     ));
   return updatedTask;
 };
