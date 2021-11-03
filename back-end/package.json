@@ -2,7 +2,7 @@
   "name": "trybe-challenge",
   "version": "1.0.0",
   "description": "developed during the career blitz at trybe",
-  "main": "index.js",
+  "main": "./src/Api/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node .",
