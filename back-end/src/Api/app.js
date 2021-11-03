@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Tasks = require('../Controllers/tasksController');
 
-const { handleErrors } = require('../Middlewares/errors');
+const { handleErrors, validateTask, validateId } = require('../Middlewares/errors');
 
 const app = express();
 
@@ -13,9 +13,9 @@ app.get('/ping', (_req, res) => {
 });
 
 app.get('/tasks', Tasks.getAll);
-app.post('/tasks', Tasks.addNew);
-app.put('/tasks/:id', Tasks.update);
-app.delete('/tasks/:id', Tasks.remove);
+app.post('/tasks', validateTask, Tasks.addNew);
+app.put('/tasks/:id', validateId, validateTask, Tasks.update);
+app.delete('/tasks/:id', validateId, Tasks.remove);
 
 app.use(handleErrors);
 
