@@ -1,8 +1,8 @@
 const connect = require('./connection');
 
-const addNew = async (msg) => {
+const addNew = async (task) => {
   const { insertedId } = await connect.getConnection()
-    .then((db) => db.collection('tasks').insertOne(msg));
+    .then((db) => db.collection('tasks').insertOne(task));
   return insertedId;
 };
 
