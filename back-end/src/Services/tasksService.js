@@ -1,4 +1,3 @@
-// const { ObjectID } = require('bson');
 const { builtError } = require('./helpers');
 const Tasks = require('../Models/tasksModel');
 
@@ -13,9 +12,9 @@ const addNew = async (task) => {
   }
 };
 
-const update = async (task) => {
+const update = async (task, id) => {
   try {
-    const updatedTask = await Tasks.update(task);
+    const updatedTask = await Tasks.update(task, id);
     return updatedTask;
   } catch (e) {
     return builtError(INTERNAL_ERROR, 'Something went wrong');

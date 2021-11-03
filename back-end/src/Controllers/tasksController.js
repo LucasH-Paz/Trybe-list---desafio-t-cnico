@@ -7,11 +7,17 @@ const addNew = async (req, res, next) => {
 
   const result = await Tasks.addNew(taskObj);
   if (result.message) return next(result);
-  
   return res.status(201).json({ result: { id: result, ...taskObj } });
 };
 
-const update = async (req, res, next) => {};
+const update = async (req, res, next) => {
+  const { title, description, status } = req.body;
+  const { id } = req.params;
+
+  const result = await Tasks.update({ title, description, status }, id);
+  if (result.message) return next(result);
+  return res.status(201).json({ result });
+};
 
 const remove = async (req, res, next) => {};
 

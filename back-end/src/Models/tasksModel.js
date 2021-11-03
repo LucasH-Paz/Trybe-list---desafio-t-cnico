@@ -1,3 +1,4 @@
+const { ObjectID } = require('bson');
 const connect = require('./connection');
 
 const addNew = async (task) => {
@@ -6,11 +7,10 @@ const addNew = async (task) => {
   return insertedId;
 };
 
-const update = async (task) => {
-  const { id } = task;
+const update = async (task, id) => {
   const updatedTask = await connect.getConnection()
     .then((db) => db.collection('tasks').findOneAndUpdate(
-      { _id: id },
+      { _id: ObjectID(id) },
       { $set : { ...task } },
       { returnNewDocument: true },
     ));
@@ -19,7 +19,7 @@ const update = async (task) => {
 
 const remove = async (id) => {
   const deletedTask = await connect.getConnection()
-    .then((db) => db.collection('tasks').findOneAndDelete({ _id: id }));
+    .then((db) => db.collection('tasks').findOneAndDelete({ _id: ObjectID(id) }));
   return deletedTask;
 };
 
