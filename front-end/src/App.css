@@ -35,11 +35,11 @@ body {
   min-height: 100vh;
   background: var(--primary-color) url('../src/assets/task-list.svg') no-repeat fixed right center;
   background-size: auto 50vh;
+  margin-top: calc(1rem + var(--header-height));
 }
 
 main {
   margin-left: 3rem;
-  margin-top: calc(1rem + var(--header-height));
 }
 
 main > ul {

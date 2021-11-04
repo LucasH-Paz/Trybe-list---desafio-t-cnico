@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable object-curly-newline */
@@ -10,6 +11,16 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
 import { fetchTasks, updateTask, deleteTask, newTask } from './Services/api';
+
+const removeOne = (array, id) => array.filter(({ _id }) => _id !== id);
+const addOne = (array, payload) => ([...array, payload]);
+const updateOne = (array, id, payload) => (
+  array.reduce((acc, cur) => {
+    // eslint-disable-next-line no-underscore-dangle
+    acc.push(cur._id === id ? { ...cur, ...payload } : cur);
+    return acc;
+  }, [])
+);
 
 const asideForm = ({ title, description, status }, onSubmit, onCancel) => (
   <Form className="updateForm">
@@ -101,13 +112,11 @@ function App() {
       <header>
         <div className="filters">
           <Form.Select aria-label="order by options">
-            <option>Ordenar por</option>
+            <option value="date">Data</option>
             <option value="alphabetical">alfabética</option>
-            <option value="date">Criação</option>
             <option value="status">Status</option>
           </Form.Select>
           <Form.Select aria-label="sort">
-            <option>Organizar</option>
             <option value="asc">ASC</option>
             <option value="desc">DESC</option>
           </Form.Select>
@@ -118,7 +127,7 @@ function App() {
       <main>
         <ul className="tasksList">
           {
-            tasks.map(({ title, description, status, _id }) => (
+            tasks.map(({ title, description, status, _id, createdAt }) => (
               <Card className="cardParent" key={`task-${_id}`}>
                 <Card.Body>
                   <Card.Title className="cardTitle" as="div">
@@ -145,6 +154,7 @@ function App() {
                   <Card.Text as="div">
                     {description}
                     <div className="status">{status}</div>
+                    <div className="status">{createdAt.substring(0, 10)}</div>
                   </Card.Text>
                 </Card.Body>
               </Card>
