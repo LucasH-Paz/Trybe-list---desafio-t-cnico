@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable object-curly-newline */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -31,14 +30,13 @@ const asideForm = ({ title, description, status }, onSubmit, onCancel) => (
     <Form.Group controlId="formBasicStatus">
       <Form.Label>Status</Form.Label>
       <Form.Select aria-label="status" defaultValue={status} id="status">
-        <option>Selecione</option>
         <option value="pendente">pendente</option>
         <option value="em andamento">em andamento</option>
         <option value="pronto">pronto</option>
       </Form.Select>
     </Form.Group>
     <div className="btn-cntrl">
-      <Button variant="success" type="submit" onClick={() => onSubmit()}>Confirmar</Button>
+      <Button variant="success" type="submit" onClick={(e) => onSubmit(e)}>Confirmar</Button>
       <Button variant="danger" type="cancel" onClick={() => onCancel()}>Cancelar</Button>
     </div>
   </Form>
@@ -58,6 +56,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [notification, setNotification] = useState('');
   const [currentDoc, setCurrentDoc] = useState(DEFAULT_DOC);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   useEffect(() => {
     fetchTasks('http://localhost:3001/tasks').then((list) => {
@@ -67,6 +66,7 @@ function App() {
 
   const resetAll = () => {
     setIsEditing(false);
+    setIsUpdate(false);
     setCurrentDoc(DEFAULT_DOC);
   };
 
@@ -79,11 +79,20 @@ function App() {
   };
 
   const addTask = async () => {
+    // e.preventDefault();
     const payload = getInfos();
 
-    const currentTasks = [...tasks];
-    const id = await newTask('http://localhost:3001/tasks', payload);
-    setTasks([...currentTasks, { _id: id, ...payload }]);
+    // const currentTasks = [...tasks];
+    await newTask('http://localhost:3001/tasks', payload);
+    // setTasks([...currentTasks, { _id: id, ...payload }]);
+    resetAll();
+  };
+
+  const updateATask = async () => {
+    // e.preventDefault();
+    const { _id } = currentDoc;
+    const payload = getInfos();
+    await updateTask(`http://localhost:3001/tasks/${_id}`, payload);
     resetAll();
   };
 
@@ -119,6 +128,7 @@ function App() {
                         className="fas fa-pen"
                         onClick={() => {
                           setIsEditing(true);
+                          setIsUpdate(true);
                           setCurrentDoc({ _id, title, description, status });
                         }}
                       />
@@ -144,7 +154,7 @@ function App() {
         {isNotifying && <span className="notification">{notification}</span>}
       </main>
       <aside>
-        {isEditing && asideForm(currentDoc, addTask, resetAll)}
+        {isEditing && asideForm(currentDoc, isUpdate ? updateATask : addTask, resetAll)}
       </aside>
     </div>
   );
