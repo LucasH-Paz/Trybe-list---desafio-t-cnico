@@ -33,7 +33,7 @@ header {
 
 body {
   min-height: 100vh;
-  background: var(--primary-color) url('../src/assets/task-list.svg') no-repeat fixed center;
+  background: var(--primary-color) url('../src/assets/task-list.svg') no-repeat fixed right center;
   background-size: auto 50vh;
 }
 
