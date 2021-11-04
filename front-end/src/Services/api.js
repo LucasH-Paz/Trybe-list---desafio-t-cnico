@@ -11,7 +11,7 @@ export const updateTask = async (endpoint, payload) => {
 };
 
 export const deleteTask = async (endpoint) => {
-  const result = await axios.delete(endpoint);
+  const { data: { result } } = await axios.delete(endpoint);
   console.log(result);
 };
 

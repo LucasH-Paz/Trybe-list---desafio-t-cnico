@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable object-curly-newline */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,13 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
-import {
-  fetchTasks, updateTask, deleteTask, newTask,
-} from './Services/api';
-
-// const resetForm = () => { };
-// const validateFilter = () => { };
-// const validateForm = () => { };
+import { fetchTasks, updateTask, deleteTask, newTask } from './Services/api';
 
 const asideForm = (onSubmit, onCancel) => (
   <Form className="updateForm">
@@ -35,14 +32,15 @@ const asideForm = (onSubmit, onCancel) => (
       </Form.Select>
     </Form.Group>
     <div className="btn-cntrl">
-      <Button variant="success" type="submit" onClick={() => onSubmit}>Confirmar</Button>
-      <Button variant="danger" type="cancel" onClick={() => onCancel}>Cancelar</Button>
+      <Button variant="success" type="submit" onClick={() => onSubmit()}>Confirmar</Button>
+      <Button variant="danger" type="cancel" onClick={() => onCancel()}>Cancelar</Button>
     </div>
   </Form>
 );
 
 function App() {
   const DEFAULT_DOC = {
+    _id: '',
     title: '',
     description: '',
     status: '',
@@ -83,14 +81,27 @@ function App() {
       <main>
         <ul className="tasksList">
           {
-            tasks.map(({ title, description, status }) => (
+            tasks.map(({ title, description, status, _id }) => (
               <Card className="cardParent">
                 <Card.Body>
                   <Card.Title className="cardTitle" as="div">
                     {title}
                     <div>
-                      <i className="fas fa-pen" />
-                      <i className="fas fa-trash" />
+                      <i
+                        className="fas fa-pen"
+                        onClick={() => {
+                          setIsEditing(true);
+                          setCurrentDoc({ _id, title, description, status });
+                        }}
+                      />
+                      <i
+                        className="fas fa-trash"
+                        onClick={async () => {
+                          const res = await deleteTask(`http://localhost:3001/tasks/${_id}`);
+                          setIsNotifying(true);
+                          setNotification(res);
+                        }}
+                      />
                     </div>
                   </Card.Title>
                   <Card.Text as="div">
@@ -105,7 +116,7 @@ function App() {
         {isNotifying && <span className="notification">{notification}</span>}
       </main>
       <aside>
-        { isEditing && asideForm(console.log('sumit'), console.log('cancel'))}
+        {isEditing && asideForm(console.log('sumit'), console.log('cancel'))}
       </aside>
     </div>
   );
