@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -6,6 +8,18 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
 function App() {
+  const DEFAULT_DOC = {
+    title: '',
+    description: '',
+    status: '',
+  };
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isNotifying, setIsNotifying] = useState(false);
+  const [tasks, setTasks] = useState([]);
+  const [currentDoc, setCurrentDoc] = useState(DEFAULT_DOC);
+
   return (
     <div>
       <header>
