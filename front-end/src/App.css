@@ -65,6 +65,7 @@ main > ul {
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   transition: all .3s ease-in-out;
+  margin-top: 1rem;
 }
 
 .cardParent:hover {
