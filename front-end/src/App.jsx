@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 
 import './App.css';
@@ -6,6 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+
+const resetForm = () => {};
+const validateFilter = () => {};
+const validateForm = () => {};
 
 function App() {
   const DEFAULT_DOC = {
@@ -26,9 +31,9 @@ function App() {
         <div className="filters">
           <Form.Select aria-label="order by options">
             <option>Ordenar por</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="alphabetical">alfabética</option>
+            <option value="date">Criação</option>
+            <option value="status">Status</option>
           </Form.Select>
           <Form.Select aria-label="sort">
             <option>Organizar</option>
@@ -46,8 +51,8 @@ function App() {
               <Card.Title className="cardTitle" as="div">
                 Title
                 <div>
-                  <i className="fas fa-pen"></i>
-                  <i className="fas fa-trash"></i>
+                  <i className="fas fa-pen" />
+                  <i className="fas fa-trash" />
                 </div>
               </Card.Title>
               <Card.Text as="div">
