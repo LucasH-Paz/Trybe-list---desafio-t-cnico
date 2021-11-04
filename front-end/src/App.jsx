@@ -12,19 +12,25 @@ import Form from 'react-bootstrap/Form';
 
 import { fetchTasks, updateTask, deleteTask, newTask } from './Services/api';
 
-const asideForm = (onSubmit, onCancel) => (
+const asideForm = ({ title, description, status }, onSubmit, onCancel) => (
   <Form className="updateForm">
     <Form.Group controlId="formBasicTitle">
       <Form.Label>Titulo</Form.Label>
-      <Form.Control type="text" required />
+      <Form.Control type="text" defaultValue={title} id="title" required />
     </Form.Group>
     <Form.Group controlId="formBasicDescription">
       <Form.Label>Descrição</Form.Label>
-      <Form.Control as="textarea" style={{ height: '100px' }} required />
+      <Form.Control
+        as="textarea"
+        style={{ height: '100px' }}
+        defaultValue={description}
+        id="description"
+        required
+      />
     </Form.Group>
     <Form.Group controlId="formBasicStatus">
       <Form.Label>Status</Form.Label>
-      <Form.Select aria-label="status">
+      <Form.Select aria-label="status" defaultValue={status} id="status">
         <option>Selecione</option>
         <option value="pendente">pendente</option>
         <option value="em andamento">em andamento</option>
@@ -47,7 +53,7 @@ function App() {
   };
 
   const [isEditing, setIsEditing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [isNotifying, setIsNotifying] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [notification, setNotification] = useState('');
@@ -58,6 +64,28 @@ function App() {
       setTasks(list);
     });
   }, []);
+
+  const resetAll = () => {
+    setIsEditing(false);
+    setCurrentDoc(DEFAULT_DOC);
+  };
+
+  const getInfos = () => {
+    const title = document.querySelector('#title').value;
+    const description = document.querySelector('#description').value;
+    const status = document.querySelector('#status').value;
+
+    return { title, description, status: status || 'pendente' };
+  };
+
+  const addTask = async () => {
+    const payload = getInfos();
+
+    const currentTasks = [...tasks];
+    const id = await newTask('http://localhost:3001/tasks', payload);
+    setTasks([...currentTasks, { _id: id, ...payload }]);
+    resetAll();
+  };
 
   return (
     <div>
@@ -76,13 +104,13 @@ function App() {
           </Form.Select>
           <Button variant="primary" type="submit">Ordenar</Button>
         </div>
-        <Button variant="warning">Adicionar</Button>
+        <Button variant="warning" onClick={() => { setIsEditing(true); }}>Adicionar</Button>
       </header>
       <main>
         <ul className="tasksList">
           {
             tasks.map(({ title, description, status, _id }) => (
-              <Card className="cardParent">
+              <Card className="cardParent" key={`task-${_id}`}>
                 <Card.Body>
                   <Card.Title className="cardTitle" as="div">
                     {title}
@@ -116,7 +144,7 @@ function App() {
         {isNotifying && <span className="notification">{notification}</span>}
       </main>
       <aside>
-        {isEditing && asideForm(console.log('sumit'), console.log('cancel'))}
+        {isEditing && asideForm(currentDoc, addTask, resetAll)}
       </aside>
     </div>
   );

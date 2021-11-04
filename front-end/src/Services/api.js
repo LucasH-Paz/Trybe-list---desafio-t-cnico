@@ -7,15 +7,12 @@ export const fetchTasks = async (endpoint) => {
 
 export const updateTask = async (endpoint, payload) => {
   const result = await axios.put(endpoint, payload);
-  console.log(result);
+  return result;
 };
 
 export const deleteTask = async (endpoint) => {
   const { data: { result } } = await axios.delete(endpoint);
-  console.log(result);
+  return result;
 };
 
-export const newTask = async (endpoint, payload) => {
-  const result = await axios.post(endpoint, payload);
-  console.log(result);
-};
+export const newTask = async (endpoint, payload) => axios.post(endpoint, payload);
