@@ -13,7 +13,6 @@ import Form from 'react-bootstrap/Form';
 import { fetchTasks, updateTask, deleteTask, newTask } from './Services/api';
 
 const removeOne = (array, id) => array.filter(({ _id }) => _id !== id);
-const addOne = (array, payload) => ([...array, payload]);
 const updateOne = (array, id, payload) => (
   array.reduce((acc, cur) => {
     // eslint-disable-next-line no-underscore-dangle
@@ -89,21 +88,24 @@ function App() {
     return { title, description, status: status || 'pendente' };
   };
 
-  const addTask = async () => {
-    // e.preventDefault();
+  const addTask = async (e) => {
+    e.preventDefault();
     const payload = getInfos();
 
-    // const currentTasks = [...tasks];
-    await newTask('http://localhost:3001/tasks', payload);
-    // setTasks([...currentTasks, { _id: id, ...payload }]);
+    const currentTasks = [...tasks];
+    const { id } = await newTask('http://localhost:3001/tasks', payload);
+    setTasks([...currentTasks, { _id: id, ...payload }]);
     resetAll();
   };
 
-  const updateATask = async () => {
-    // e.preventDefault();
+  const updateATask = async (e) => {
+    e.preventDefault();
+    const currentTasks = [...tasks];
     const { _id } = currentDoc;
     const payload = getInfos();
     await updateTask(`http://localhost:3001/tasks/${_id}`, payload);
+    const newTasks = updateOne(currentTasks, _id, payload);
+    setTasks(newTasks);
     resetAll();
   };
 
@@ -127,7 +129,7 @@ function App() {
       <main>
         <ul className="tasksList">
           {
-            tasks.map(({ title, description, status, _id, createdAt }) => (
+            tasks.map(({ title, description, status, _id, createdAt = `${new Date()}}` }) => (
               <Card className="cardParent" key={`task-${_id}`}>
                 <Card.Body>
                   <Card.Title className="cardTitle" as="div">
@@ -144,7 +146,9 @@ function App() {
                       <i
                         className="fas fa-trash"
                         onClick={async () => {
+                          const currentTasks = [...tasks];
                           const res = await deleteTask(`http://localhost:3001/tasks/${_id}`);
+                          setTasks(removeOne(currentTasks, _id));
                           setIsNotifying(true);
                           setNotification(res);
                         }}
@@ -154,7 +158,11 @@ function App() {
                   <Card.Text as="div">
                     {description}
                     <div className="status">{status}</div>
-                    <div className="status">{createdAt.substring(0, 10)}</div>
+                    <div className="status">
+                      {
+                        createdAt.substring(0, 10)
+                      }
+                    </div>
                   </Card.Text>
                 </Card.Body>
               </Card>
