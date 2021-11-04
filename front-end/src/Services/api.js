@@ -14,3 +14,8 @@ export const deleteTask = async (endpoint) => {
   const result = await axios.delete(endpoint);
   console.log(result);
 };
+
+export const newTask = async (endpoint, payload) => {
+  const result = await axios.post(endpoint, payload);
+  console.log(result);
+};

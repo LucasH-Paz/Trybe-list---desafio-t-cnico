@@ -7,7 +7,9 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
-import fetchTasks from './Services/api';
+import {
+  fetchTasks, updateTask, deleteTask, newTask,
+} from './Services/api';
 
 // const resetForm = () => { };
 // const validateFilter = () => { };
