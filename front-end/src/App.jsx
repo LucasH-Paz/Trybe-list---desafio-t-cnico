@@ -147,6 +147,11 @@ function App() {
     const newTasks = updateOne(currentTasks, _id, payload);
     setTasks(newTasks);
     resetAll();
+    setIsNotifying(true);
+    setNotification('Atualizado com sucesso!');
+    setTimeout(() => {
+      setIsNotifying(false);
+    }, 1000);
   };
 
   return (
