@@ -1,6 +1,8 @@
 # Trybe Todos tech challenge
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![NodeJS](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![ExpressJS](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white) ![MongoDb](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 
+![Project image](https://raw.githubusercontent.com/LucasH-Paz/Trybe-list-desafio-tecnico/master/assets/Captura%20de%20tela%20de%202021-11-05%2010-38-58.png)
+
 Bem Vindo(a) ao repositório Trybe Todos tech challenge!
 
 Este projeto foi desenvolvido durante o curso da trybe de desenvolvimento web. O objetivo aqui era desenvolver uma aplicação que ajudasse as pessoas da empresa fictícia **Ebytr** a se organizarem, sendo assim criada uma lista de tarefas (todos ;) ) em que cada pessoa pudesse inserir suas tarefas e ordená-las conforme nome, data ou status. Essas tarefas são persistidas em um banco de dados.
