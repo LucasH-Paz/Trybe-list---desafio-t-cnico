@@ -13,6 +13,7 @@ import Form from 'react-bootstrap/Form';
 import { fetchTasks, updateTask, deleteTask, newTask } from './Services/api';
 
 const removeOne = (array, id) => array.filter(({ _id }) => _id !== id);
+
 const updateOne = (array, id, payload) => (
   array.reduce((acc, cur) => {
     // eslint-disable-next-line no-underscore-dangle
@@ -20,6 +21,40 @@ const updateOne = (array, id, payload) => (
     return acc;
   }, [])
 );
+
+const compareStringValues = (task1, task2) => {
+  if (task1 > task2) return 1;
+  if (task1 < task2) return -1;
+  return 0;
+};
+
+const orderTasks = (tasks, category, order) => {
+  const array = [...tasks];
+
+  const toggleSort = (t1, t2) => (
+    order === 'desc' ? (compareStringValues(t1, t2) * -1) : compareStringValues(t1, t2)
+  );
+
+  const doSort = {
+    date: () => {
+      array.sort(
+        ({ createdAt: task1 }, { createdAt: task2 }) => toggleSort(task1, task2),
+      );
+    },
+    alphabetical: () => {
+      array.sort(
+        ({ title: task1 }, { title: task2 }) => toggleSort(task1, task2),
+      );
+    },
+    status: () => {
+      array.sort(
+        ({ status: task1 }, { status: task2 }) => toggleSort(task1, task2),
+      );
+    },
+  };
+
+  return doSort[category]();
+};
 
 const asideForm = ({ title, description, status }, onSubmit, onCancel) => (
   <Form className="updateForm">
