@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const Tasks = require('../Controllers/tasksController');
+const cors = require('cors');
 
 const { handleErrors } = require('../Middlewares/errors');
 const { validateTask, validateId } = require('../Middlewares/tasks');
@@ -8,6 +9,7 @@ const { validateTask, validateId } = require('../Middlewares/tasks');
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get('/ping', (_req, res) => {
   res.status(200).json({ mesage: 'pong' });

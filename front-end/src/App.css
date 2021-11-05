@@ -1,0 +1,109 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  /* Sizes */
+  --header-height: 5rem;
+  --card-title: 2rem;
+  /* Colors */
+  --primary-color: #F3F3F3;
+  --secondary-color: #0F507B;
+  --smooth-secondary-color: #C4DAEB;
+  --smooth-text-secondary: #74B4E4;
+}
+
+header {
+  background-color: var(--secondary-color);
+  padding: 1rem 2rem;
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 1;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+} 
+
+body {
+  min-height: 100vh;
+  background: var(--primary-color) url('../src/assets/task-list.svg') no-repeat fixed right center;
+  background-size: auto 50vh;
+  margin-top: calc(1rem + var(--header-height));
+}
+
+main {
+  margin-left: 3rem;
+}
+
+main > ul {
+  max-width: 700px;
+}
+
+.notification {
+  background-color: var(--smooth-secondary-color);
+  color: var(--smooth-text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 10rem;
+  position: fixed;
+  bottom: 3rem;
+  right: 2rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.status {
+  margin-top: 2rem;
+}
+
+.cardParent {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: all .3s ease-in-out;
+  margin-top: 1rem;
+}
+
+.cardParent:hover {
+  transform: scale(1.01);
+}
+
+.cardTitle {
+  color: var(--secondary-color);
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--card-title);
+}
+
+.cardTitle > div {
+  display: flex;
+  gap: 1rem;
+  font-size: 1rem;
+}
+
+.cardTitle > div i {
+  cursor: pointer;
+}
+
+.updateForm {
+  position: fixed;
+  right: 2rem;
+  top: calc(1rem + var(--header-height));
+  width: 400px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.btn-cntrl {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 1rem 0;
+}
