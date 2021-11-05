@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable object-curly-newline */
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -9,7 +8,12 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
-import { fetchTasks, updateTask, deleteTask, newTask } from './Services/api';
+import {
+  fetchTasks,
+  updateTask,
+  deleteTask,
+  newTask,
+} from './Services/api';
 
 const removeOne = (array, id) => array.filter(({ _id }) => _id !== id);
 
@@ -140,13 +144,17 @@ function App() {
 
   const updateATask = async (e) => {
     e.preventDefault();
+
     const currentTasks = [...tasks];
     const { _id } = currentDoc;
     const payload = getInfos();
+
     await updateTask(`http://localhost:3001/tasks/${_id}`, payload);
     const newTasks = updateOne(currentTasks, _id, payload);
+
     setTasks(newTasks);
     resetAll();
+
     setIsNotifying(true);
     setNotification('Atualizado com sucesso!');
     setTimeout(() => {
@@ -185,7 +193,9 @@ function App() {
       <main>
         <ul className="tasksList">
           {
-            tasks.map(({ title, description, status, _id, createdAt = `${new Date()}}` }) => (
+            tasks.map(({
+              title, description, status, _id, createdAt = `${new Date()}}`,
+            }) => (
               <Card className="cardParent" key={`task-${_id}`}>
                 <Card.Body>
                   <Card.Title className="cardTitle" as="div">
@@ -196,7 +206,9 @@ function App() {
                         onClick={() => {
                           setIsEditing(true);
                           setIsUpdate(true);
-                          setCurrentDoc({ _id, title, description, status });
+                          setCurrentDoc({
+                            _id, title, description, status,
+                          });
                         }}
                       />
                       <i
