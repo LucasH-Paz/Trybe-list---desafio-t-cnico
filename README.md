@@ -7,7 +7,7 @@ Bem Vindo(a) ao repositório Trybe Todos tech challenge!
 
 Este projeto foi desenvolvido durante o curso da trybe de desenvolvimento web. O objetivo aqui era desenvolver uma aplicação que ajudasse as pessoas da empresa fictícia **Ebytr** a se organizarem, sendo assim criada uma lista de tarefas (todos ;) ) em que cada pessoa pudesse inserir suas tarefas e ordená-las conforme nome, data ou status. Essas tarefas são persistidas em um banco de dados.
 
-## Oque foi desenvolvido
+## O que foi desenvolvido
 Para esse projeto, foram desenvolvidos:
 - Interface gráfica usando [React](https://pt-br.reactjs.org/);
 - API que gerencia o acesso ao banco de dados, feita usando [Express](https://expressjs.com/pt-br/), um pacote para [NodeJS](https://nodejs.org/en/);
@@ -59,7 +59,7 @@ npm start
 // Abra um novo terminal
 cd ..
 cd front-end
-npm strat
+npm start
 
 ```
 Você deve ver a interface para gerenciar as tarefas, e se sim, está pronte para começar a usar a aplicação 🥳.
