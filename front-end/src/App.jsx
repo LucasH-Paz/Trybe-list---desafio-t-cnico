@@ -22,6 +22,12 @@ const updateOne = (array, id, payload) => (
   }, [])
 );
 
+const getSortParams = () => {
+  const category = document.querySelector('#category').value;
+  const order = document.querySelector('#order').value;
+  return { category, order };
+};
+
 const compareStringValues = (task1, task2) => {
   if (task1 > task2) return 1;
   if (task1 < task2) return -1;
@@ -36,21 +42,21 @@ const orderTasks = (tasks, category, order) => {
   );
 
   const doSort = {
-    date: () => {
+    date: () => (
       array.sort(
         ({ createdAt: task1 }, { createdAt: task2 }) => toggleSort(task1, task2),
-      );
-    },
-    alphabetical: () => {
+      )
+    ),
+    alphabetical: () => (
       array.sort(
         ({ title: task1 }, { title: task2 }) => toggleSort(task1, task2),
-      );
-    },
-    status: () => {
+      )
+    ),
+    status: () => (
       array.sort(
         ({ status: task1 }, { status: task2 }) => toggleSort(task1, task2),
-      );
-    },
+      )
+    ),
   };
 
   return doSort[category]();
@@ -148,16 +154,27 @@ function App() {
     <div>
       <header>
         <div className="filters">
-          <Form.Select aria-label="order by options">
+          <Form.Select aria-label="order by options" id="category">
             <option value="date">Data</option>
             <option value="alphabetical">alfabética</option>
             <option value="status">Status</option>
           </Form.Select>
-          <Form.Select aria-label="sort">
+          <Form.Select aria-label="sort" id="order">
             <option value="asc">ASC</option>
             <option value="desc">DESC</option>
           </Form.Select>
-          <Button variant="primary" type="submit">Ordenar</Button>
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              const { category, order } = getSortParams();
+              const orderdTasks = orderTasks(tasks, category, order);
+              setTasks(orderdTasks);
+            }}
+          >
+            Ordenar
+          </Button>
         </div>
         <Button variant="warning" onClick={() => { setIsEditing(true); }}>Adicionar</Button>
       </header>
