@@ -129,7 +129,7 @@ function App() {
     const description = document.querySelector('#description').value;
     const status = document.querySelector('#status').value;
 
-    return { title, description, status: status || 'pendente' };
+    return { title, description, status };
   };
 
   const addTask = async (e) => {
@@ -188,7 +188,7 @@ function App() {
             Ordenar
           </Button>
         </div>
-        <Button variant="warning" onClick={() => { setIsEditing(true); }}>Adicionar</Button>
+        <Button variant="warning" onClick={() => { setIsEditing(!isEditing); }}>Adicionar</Button>
       </header>
       <main>
         <ul className="tasksList">
