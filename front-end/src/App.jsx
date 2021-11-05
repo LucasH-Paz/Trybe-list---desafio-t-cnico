@@ -63,11 +63,11 @@ const orderTasks = (tasks, category, order) => {
 
 const asideForm = ({ title, description, status }, onSubmit, onCancel) => (
   <Form className="updateForm">
-    <Form.Group controlId="formBasicTitle">
+    <Form.Group>
       <Form.Label>Titulo</Form.Label>
       <Form.Control type="text" defaultValue={title} id="title" required />
     </Form.Group>
-    <Form.Group controlId="formBasicDescription">
+    <Form.Group>
       <Form.Label>Descrição</Form.Label>
       <Form.Control
         as="textarea"
@@ -77,7 +77,7 @@ const asideForm = ({ title, description, status }, onSubmit, onCancel) => (
         required
       />
     </Form.Group>
-    <Form.Group controlId="formBasicStatus">
+    <Form.Group>
       <Form.Label>Status</Form.Label>
       <Form.Select aria-label="status" defaultValue={status} id="status">
         <option value="pendente">pendente</option>
