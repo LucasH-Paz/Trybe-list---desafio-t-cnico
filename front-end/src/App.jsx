@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable object-curly-newline */
@@ -203,6 +202,9 @@ function App() {
                           setTasks(removeOne(currentTasks, _id));
                           setIsNotifying(true);
                           setNotification(res);
+                          setTimeout(() => {
+                            setIsNotifying(false);
+                          }, 1000);
                         }}
                       />
                     </div>
